@@ -1,6 +1,7 @@
 import { awaitPolyfills } from 'js/polyfills/await-polyfills';
 import template from 'components/collapsible/_test-template.njk';
 import Collapsible from 'components/collapsible/collapsible';
+import eventMock from 'stubs/event.stub.spec';
 
 const params = {
   id: 'collapsible',
@@ -125,7 +126,7 @@ describe('Component: collapsible', function() {
       });
 
       describe('and the component is closed', function() {
-        describe('when the component is opened', function() {
+        describe('when the component is opened with a click', function() {
           beforeEach(function() {
             this.collapsibleHeader.click();
           });
@@ -140,13 +141,13 @@ describe('Component: collapsible', function() {
         });
       });
 
-      describe('and the component has been opened', function() {
+      describe('and the component has been opened with a click', function() {
         beforeEach(function(done) {
           this.collapsibleHeader.click();
           setTimeout(done);
         });
 
-        describe('when the component is closed from the collapsibleHeader element', function() {
+        describe('when the component is closed with a click from the collapsibleHeader element', function() {
           beforeEach(function() {
             this.collapsibleHeader.click();
           });
@@ -157,6 +158,60 @@ describe('Component: collapsible', function() {
         describe('when the component is closed from the button element', function() {
           beforeEach(function() {
             this.button.click();
+          });
+
+          onCloseTests();
+        });
+      });
+
+      describe('and the component is closed', function() {
+        describe('and the component has been opened with a space press', function() {
+          beforeEach(function(done) {
+            this.collapsibleHeader.focus();
+            this.mockedEvent = eventMock({ key: 'Space' });
+            this.collapsible.keyboardInteraction(this.mockedEvent);
+            setTimeout(done);
+          });
+
+          onOpenTests();
+        });
+
+        describe('and the component is closed with a space press', function() {
+          beforeEach(function() {
+            this.collapsibleHeader.focus();
+            this.mockedEvent = eventMock({ key: 'Space' });
+            this.collapsible.keyboardInteraction(this.mockedEvent);
+          });
+
+          onCloseTests();
+        });
+
+        describe('and the component has been opened with a enter press', function() {
+          beforeEach(function(done) {
+            this.collapsibleHeader.focus();
+            this.mockedEvent = eventMock({ key: 'Enter' });
+            this.collapsible.keyboardInteraction(this.mockedEvent);
+            setTimeout(done);
+          });
+
+          onOpenTests();
+        });
+
+        describe('and the component is closed with a enter press', function() {
+          beforeEach(function() {
+            this.collapsibleHeader.focus();
+            this.mockedEvent = eventMock({ key: 'Enter' });
+            this.collapsible.keyboardInteraction(this.mockedEvent);
+          });
+
+          onCloseTests();
+        });
+
+        describe('and another key is pressed thats not enter or space', function() {
+          beforeEach(function() {
+            this.collapsibleHeader.focus();
+            this.mockedEvent = eventMock({ key: 'g' });
+            this.collapsible.keyboardInteraction(this.mockedEvent);
           });
 
           onCloseTests();
@@ -187,7 +242,7 @@ describe('Component: collapsible', function() {
 
       onOpenTests();
 
-      describe('and the component is closed', function() {
+      describe('and the component is closed with a click', function() {
         beforeEach(function(done) {
           this.collapsibleHeader.click();
           setTimeout(done);
@@ -195,7 +250,7 @@ describe('Component: collapsible', function() {
 
         onCloseTests();
 
-        describe('and the component is opened', function() {
+        describe('and the component is opened with a click', function() {
           beforeEach(function(done) {
             this.collapsibleHeader.click();
             setTimeout(done);
